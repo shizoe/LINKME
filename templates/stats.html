@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="row" style="height: 100vh;">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+                <h2>URL <b>Summary </b>  <button type="button"  class="btn btn-success float-right"
+                data-toggle="modal" data-target="#mymodal">Add New URL</button> </h2>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+
+    {% for message in messages %}
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                {{message}}
+                </div>
+                {% endfor %}
+
+                {% endif %}
+                {% endwith %}
+
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <th>#</th>
+                        <th>Short URL</th>
+                        <th>Original URL</th>
+                        <th>Clicks</th>
+                        <th>Date Created </th>
+                        <th style="width: 20px">Action</th>
+                    </tr>
+                   {% for url in urls %}
+                    <tr>
+                        <td>{{url.number}}</td>
+                        <td><a href="{{url.short_url}}" target="_blank">{{url.short_url}}</a></td>
+                        <td><a href="{{url.original_url}}" target="_blank">{{url.original_url}}</a></td>
+                        <td>{{url.clicks}}</td>
+                        <td>{{ url.created }}</td>
+                        <td>
+                            <a href="/stats/update/{{url.id}}" class="btn btn-warning btn-xs mb-2" data-toggle="modal" data-target="#modaledit{{url.id}}">Edit</a>
+                            <a href="/stats/delete/{{url.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+                        </td>
+                    </tr>
+     <!-- Modal Edit Employee-->
+     <div id="modaledit{{url.id}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <div class="modal-content">
+       <div class="modal-header"><h4 class="modal-title">Update Information</h4></div>
+        <div class="modal-body">
+        <form action="{{url_for('main.update')}}" method="POST">
+         <div class="form-group">
+          <label>Short URL:</label>
+          <input type="hidden"  name="id" value="{{url.id}}">
+          <input type="text" class="form-control" name="short_url" value="{{url.short_url}}" readonly>
+         </div>
+         <div class="form-group">
+          <label>Original URL:</label>
+          <input type="text" class="form-control" name="original_url" value="{{url.original_url}}">
+         </div>
+         <div class="form-group">
+          <button class="btn btn-primary" type="submit">Update</button>
+         </div>
+        </form>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      </div>
+     </div>
+     {% endfor %}
+    </table>
+   </div>
+
+  <!-- Modal Add Employee-->
+  <div id="mymodal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+     <div class="modal-content">
+    <div class="modal-header"><h4 class="modal-title">Add New URL</h4></div>
+    <div class="modal-body">
+     <form action="{{url_for('main.insert')}}" method="POST">
+      <div class="form-group">
+       <label>Original URL:</label>
+       <input type="text" class="form-control" name="original_url" required="1">
+      </div>
+      <div class="form-group">
+      <button class="btn btn-primary" type="submit">Add URL</button>
+      </div>
+     </form>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+   </div>
+   </div>
+  </div>
+
+ </div>
+ </div>
+
+{% endblock %}

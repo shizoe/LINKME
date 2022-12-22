@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="box" style="width: 600px;">
+        <h3 class="title">URL Shortener</h3>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="text-danger">
+                            {{ messages[0] }}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            <form method="post">
+                <div class="mx-auto">
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <input type="text" name="url" placeholder="URL" class="form-control form-control-lg" autofocus></input>
+                </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-secondary btn-lg">Submit</button>
+                </div>
+            </form>
+
+            {% if short_url %}
+                <hr>
+                <span><a href="{{ short_url }}" target="_blank">{{ short_url }}</a></span><br>
+            {% endif %}
+    </div>
+{% endblock %}

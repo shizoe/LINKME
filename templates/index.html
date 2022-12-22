@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="text-xl-center display-1 fw-bold">
+        LINKME
+    </h1>
+
+    <h6 class="text-center fw-lighter fst-italic">
+        Making website links fun, short and easy to remember
+    </h6>
+    <h2>{{ msg }}</h2>
+    {% if not current_user.is_authenticated %}
+    <div class="text-center">
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg px-3">Login</a>
+        <a href="{{ url_for('auth.signup') }}" class="btn btn-dark btn-lg px-3">signup</a>
+    </div>
+    {% endif %}
+{% endblock %}

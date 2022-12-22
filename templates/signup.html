@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="column is-4 is-offset-4">
+        <h3 class="title">Sign Up</h3>
+        <div class="box" style="width: 400px;">
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="text-danger">
+                        {{ messages[0] }}. Go to <a class="text-success" href="{{ url_for('auth.login') }}">login page</a>.
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="/signup" id="signup" name="signup">
+                <legend class="registerStatus text-danger" id="registerStatus" >{{ legend }}</legend>
+                <div class="field mx-auto mt-2">
+                    <div class="control">
+                        <input class="form-control form-control-lg" type="email" id="email" name="email" placeholder="Email" autofocus="" required>
+                    </div>
+                </div>
+
+                <div class="field mx-auto mt-2">
+                    <div class="control">
+                        <input class="form-control form-control-lg" type="text" id="firstname" name="firstname" placeholder="First Name" autofocus="" required>
+                    </div>
+                </div>
+
+                <div class="field mx-auto mt-2">
+                    <div class="control">
+                        <input class="form-control form-control-lg" type="text" id="lastname" name="lastname" placeholder="Last Name" autofocus="" required>
+                    </div>
+                </div>
+
+                <div class="field mx-auto mt-2">
+                    <div class="control">
+                        <input class="form-control form-control-lg" type="password" id="password" name="password" placeholder="Password" required onkeyup='check();'>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+
+                </div>
+
+                <div class="field mx-auto mt-2">
+                    <div class="control">
+                        <input class="form-control form-control-lg" type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required onkeyup='check();'>
+                        <span id='message'></span>
+                    </div>
+                </div>
+
+                <button class="btn btn-lg btn-dark px-2 mt-2" id="signup" onclick="validateRegisterForm()">Sign Up</button>
+            </form>
+        </div>
+    </div>
+    <script type="application/javascript">
+        function validateRegisterForm() {
+            var email = document.getElementById('email').value;
+            if(email == "") {
+                document.getElementById('registerStatus').innerHTML = "email cannot be empty";
+                return false;
+            }
+
+            var firstName = document.getElementById('firstname').value;
+            if(firstName == "") {
+                document.getElementById('registerStatus').innerHTML = "First Name cannot be empty";
+                return false;
+            }
+
+            var lastName = document.getElementById('lastname').value;
+            if (lastName== "") {
+                document.getElementById('registerStatus').innerHTML = "Last Name cannot be empty";
+                return false;
+            }
+
+            var password = document.getElementById('password').value;
+            if(password == "") {
+                document.getElementById('registerStatus').innerHTML = "Password cannot be empty";
+                return false;
+            }
+
+
+            var confirm_Password = document.getElementById('confirm_password').value;
+            if(confirm_Password == "") {
+                document.getElementById('registerStatus').innerHTML = "Please retype password";
+                return false;
+            }
+
+        }
+        var check = function() {
+            if (
+                document.getElementById('password').value ==
+                document.getElementById('confirm_password').value) {
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('message').innerHTML = 'matching';
+            } else {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'not matching';
+                return false
+            }
+        }
+    </script>
+{% endblock %}
