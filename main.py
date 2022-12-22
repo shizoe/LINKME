@@ -29,8 +29,8 @@ def url_redirect(id):
         db_session.commit()
         return redirect(original_url)
     else:
-
-        return redirect(url_for('main.index', msg='Invalid URL'))
+        flash('Invalid URL')
+        return redirect(url_for('main.index'))
 
 
 @main.route('/home')
