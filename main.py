@@ -3,9 +3,8 @@ from datetime import datetime
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 
-from app import app
 from database import db_session
-from models import Urls
+from models import Urls, User
 from hashids import Hashids
 
 main = Blueprint('main', __name__)
@@ -37,6 +36,7 @@ def url_redirect(id):
 @main.route('/home')
 @login_required
 def home():
+
     return render_template('home.html')
 
 
@@ -128,3 +128,7 @@ def delete(id):
     db_session.commit()
     flash("URL Deleted Successfully")
     return redirect(url_for('main.stats'))
+
+def getUser(id):
+    user = User.query.filter_by(id=id).first()
+    return user
