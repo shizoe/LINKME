@@ -9,7 +9,7 @@ from flask_mail import Mail
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'this should be a secret random string'
+app.config['SECRET_KEY'] = 'linkmeapplication1103j'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
