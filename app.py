@@ -1,12 +1,14 @@
 # URL Shortener using Flask
-from flask import Flask
+from datetime import timedelta
+
+import flask
+from flask import Flask, session, g
 from database import db_session, init_db
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from auth import auth as auth_blueprint
 from models import User
 from main import main as main_blueprint
 from flask_mail import Mail
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'linkmeapplication1103j'
@@ -19,7 +21,6 @@ app.config['MAIL_PASSWORD'] = '227MYk.0120'
 app.register_blueprint(auth_blueprint)
 app.register_blueprint(main_blueprint)
 
-
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
@@ -31,6 +32,14 @@ init_db()
 def load_user(user_id):
     # since the user_id is just the primary key of our user table, use it in the query for the user
     return User.query.get(int(user_id))
+
+
+@app.before_request
+def before_request():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=5)
+    flask.session.modified = True
+    g.user = current_user
 
 
 @app.teardown_appcontext
