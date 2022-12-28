@@ -16,23 +16,23 @@
                 <form method="POST" action="/login">
                     <div class="mx-auto mt-2">
                         <div class=form-group">
-                            <input class="form-control form-control-lg" type="email" name="email" placeholder="Your Email" autofocus="">
+                            <input class="form-control form-control-lg" type="email" name="email" placeholder="Your Email" autofocus="" required>
                         </div>
                     </div>
 
                     <div class="mx-auto mt-3">
                         <div class="form-group">
-                            <input class="form-control form-control-lg" type="password" name="password" placeholder="Your Password">
+                            <input class="form-control form-control-lg" type="password" name="password" placeholder="Your Password" required>
                         </div>
                     </div>
-                    <div class="mx-auto">
+                    <div class="mx-auto mb-3 mt-2">
                         <label class="form-check">
                             <input type="checkbox" name="remember">
                             Remember me
                         </label>
                     </div>
 
-                    <button class="btn btn-primary">Login</button>
+                    <button class="btn btn-lg btn-primary ">Login</button>
                     <a href="{{url_for('auth.forgotpassword')}}">Forget Password?</a>
                 </form>
             </div>

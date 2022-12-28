@@ -2,7 +2,6 @@ from datetime import datetime
 
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-
 from database import db_session
 from models import Urls, User
 from hashids import Hashids
@@ -36,7 +35,6 @@ def url_redirect(id):
 @main.route('/home')
 @login_required
 def home():
-
     return render_template('home.html')
 
 
@@ -87,7 +85,6 @@ def insert():
         original_url = request.form['original_url']
 
         check = Urls.query.filter_by(original_url=original_url, user_id=current_user.id).first()
-        print(check.original_url)
         if check:  # if a user is found, we want to redirect back to signup page so user can try again
             hashid = hashids.encode(check.id)
             short_url = (request.host_url + hashid)
@@ -128,6 +125,7 @@ def delete(id):
     db_session.commit()
     flash("URL Deleted Successfully")
     return redirect(url_for('main.stats'))
+
 
 def getUser(id):
     user = User.query.filter_by(id=id).first()

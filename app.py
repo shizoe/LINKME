@@ -1,4 +1,5 @@
 # URL Shortener using Flask
+import os
 from datetime import timedelta
 
 import flask
@@ -11,13 +12,11 @@ from main import main as main_blueprint
 from flask_mail import Mail
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'linkmeapplication1103j'
+# app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] = 'SECRET_KEY'
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'hastingskombe1993@gmail.com'
-app.config['MAIL_PASSWORD'] = '227MYk.0120'
 app.register_blueprint(auth_blueprint)
 app.register_blueprint(main_blueprint)
 
@@ -48,5 +47,5 @@ def shutdown_session(exception=None):
 
 
 if __name__ == "__main__":
-    #app.run(host='0.0.0.0')
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
+    # app.run(debug=True)

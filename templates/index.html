@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1 class="text-xl-center display-1 fw-bold">
-        LINKME
-    </h1>
+        <h1 class="text-xl-center display-1 font-weight-bold">
+            &#8499;&#9830;LINKME
+        </h1>
 
-    <h6 class="text-center fw-lighter fst-italic">
-        Making website links fun, short and easy to remember
-    </h6>
-    {% if not current_user.is_authenticated %}
-        <div class="text-center">
-            <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg px-3">Login</a>
-            <a href="{{ url_for('auth.signup') }}" class="btn btn-dark btn-lg px-3">signup</a>
-        </div>
-    {% endif %}
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <div class="text-danger" style="text-align: center"><h3>
-                        {{ messages[0] }}</h3>
-                    </div>
-                {% endif %}
-            {% endwith %}
+        <h6 class="text-center font-weight-light font-italic">
+            Making website links fun, short and easy to remember
+        </h6>
+        {% if not current_user.is_authenticated %}
+            <div class="text-center">
+                <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg px-3">Login</a>
+                <a href="{{ url_for('auth.signup') }}" class="btn btn-dark btn-lg px-3">signup</a>
+            </div>
+        {% endif %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="text-danger" style="text-align: center"><h3>
+                    {{ messages[0] }}</h3>
+                </div>
+            {% endif %}
+        {% endwith %}
 {% endblock %}
