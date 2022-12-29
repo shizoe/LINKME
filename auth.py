@@ -83,19 +83,19 @@ def changepassword_post():
     user_email = current_user.email
 
     if not new_password == verify_password:
-        flash('New Password Verification failed. Please Try Again')
+        flash('New Password Verification failed. Please Ensure that Password and Password Verify Match')
         return redirect(url_for('auth.changepassword'))
 
     user = User.query.filter_by(email=user_email).first()
-    if not user.password == old_password:
+    if not check_password_hash(user.password, old_password):
         flash('Wrong old password, Please try again or click on forget password')
         return redirect(url_for('auth.changepassword'))
 
-    if user.password == new_password:
+    if check_password_hash(user.password, new_password):
         flash('Old password cannot be the same as the new password')
         return redirect(url_for('auth.changepassword'))
 
-    user.password = new_password
+    user.password = generate_password_hash(new_password, method='sha256')
     db_session.commit()
 
     return redirect(url_for('main.index'))

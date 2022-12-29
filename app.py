@@ -1,5 +1,4 @@
 # URL Shortener using Flask
-import os
 from datetime import timedelta
 
 import flask
